@@ -1,0 +1,36 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - devops  # Changez en fonction de votre branche principale
+  pull_request:
+    branches:
+      - devops
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Changez en fonction de la version de Python requise
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Assurez-vous d'avoir un fichier requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest  # Assurez-vous d'avoir des tests définis
+
+      - name: Deploy (Optional)
+        run: |
+          echo "Déploiement de l'application..."
+          # Ajoutez ici vos commandes de déploiement, comme la mise à jour sur un serveur
